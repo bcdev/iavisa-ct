@@ -16,9 +16,6 @@
 
 using namespace std;
 
-static long zoneCount_;
-static long timeCount_;
-
 static vector<const CT*> cts_;
 static vector<double> parameters_;
 
@@ -88,10 +85,11 @@ const char* gtDirectoryPath() {
 	return directoryPath_.c_str();
 }
 
-static void gtCreateDirectory(const char* path) {
+static long gtCreateDirectory(const char* path) {
 	string command = "mkdir -p ";
 	command.append(path);
-	system(command.c_str());
+
+	return system(command.c_str());
 }
 
 static FILE* gtCreateFile(const char* path) {
@@ -102,11 +100,11 @@ void gtInit(DatasetId datasetId, TestId testId, const char* initId,
 		const char* parameterFilePath) throw() {
 	gtExit();
 
-	zoneCount_ = gtZoneCount(testId);
-	timeCount_ = gtTimeCount(testId);
+	const long zoneCount = gtZoneCount(testId);
+	const long timeCount = gtTimeCount(testId);
 
-	for (long zoneId = 0; zoneId < zoneCount_; ++zoneId) {
-		for (long timeId = 0; timeId < timeCount_; ++timeId) {
+	for (long zoneId = 0; zoneId < zoneCount; ++zoneId) {
+		for (long timeId = 0; timeId < timeCount; ++timeId) {
 			cts_.push_back(new CT(datasetId, testId, zoneId, timeId));
 		}
 	}
@@ -145,7 +143,15 @@ void gtInit(DatasetId datasetId, TestId testId, const char* initId,
 		directoryPath_ = filePathFactory.createDirectoryPath();
 		parameterFilePath_ = filePathFactory.createParameterFilePath();
 
-		gtCreateDirectory(directoryPath_.c_str());
+		const long status = gtCreateDirectory(directoryPath_.c_str());
+		if (status == -1) {
+			string msg("Directory '");
+			msg.append(directoryPath_);
+			msg.append("' could no be created.");
+
+			gtExit();
+			throw runtime_error(msg);
+		}
 		gtCreateFile(filePathFactory.createLogFilePath().c_str());
 	}
 }
@@ -166,15 +172,12 @@ void gtExit() {
 		fclose(logFile_);
 		logFile_ = 0;
 	}
-
-	zoneCount_ = 0;
-	timeCount_ = 0;
 }
 
 const char* gtSave(const double parameters[]) {
 	if (parameterFilePath_.length() != 0) {
 		ofstream ofs(parameterFilePath_.c_str());
-
+		
 		if (ofs) {
 			for (size_t i = 0; i < parameters_.size(); ++i) {
 				if (ofs) {

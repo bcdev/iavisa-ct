@@ -71,13 +71,14 @@ const char* ctDirectoryPath() {
 	return directoryPath_.c_str();
 }
 
-static void gtCreateDirectory(const char* path) {
+static long ctCreateDirectory(const char* path) {
 	string command = "mkdir -p ";
 	command.append(path);
-	system(command.c_str());
+	
+	return system(command.c_str());
 }
 
-static FILE* gtCreateFile(const char* path) {
+static FILE* ctCreateFile(const char* path) {
 	return fopen(path, "w");
 }
 
@@ -122,8 +123,16 @@ void ctInit(DatasetId datasetId, TestId testId, long zoneId, long timeId,
 		directoryPath_ = filePathFactory.createDirectoryPath();
 		parameterFilePath_ = filePathFactory.createParameterFilePath();
 
-		gtCreateDirectory(directoryPath_.c_str());
-		gtCreateFile(filePathFactory.createLogFilePath().c_str());
+		const long status = ctCreateDirectory(directoryPath_.c_str());
+		if (status == -1) {
+			string msg("Directory '");
+			msg.append(directoryPath_);
+			msg.append("' could no be created.");
+
+			ctExit();
+			throw runtime_error(msg);
+		}
+		ctCreateFile(filePathFactory.createLogFilePath().c_str());
 	}
 }
 

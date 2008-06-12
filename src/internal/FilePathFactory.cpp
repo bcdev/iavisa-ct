@@ -45,7 +45,9 @@ string FilePathFactory::toString(DatasetId datasetId, TestId testId,
 
 	s.append(toString(datasetId));
 	s.append(toString(testId));
+	s.append("_");
 	s.append(toString(zoneId, 4));
+	s.append("_");
 	s.append(toString(timeId, 2));
 
 	return s;
