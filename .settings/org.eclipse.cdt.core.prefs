@@ -1,0 +1,4 @@
+#Wed Jun 11 20:40:57 CEST 2008
+eclipse.preferences.version=1
+environment/project/cdt.managedbuild.config.gnu.lib.debug.1240798206=<?xml version\="1.0" encoding\="UTF-8"?>\n<environment append\="true" appendContributed\="true">\n<variable delimiter\=";" name\="IAVISA_HOME" operation\="append" value\="/home/ralf/workspace/iavisact-1.x"/>\n</environment>\n
+environment/project/cdt.managedbuild.config.gnu.lib.release.1149252139=<?xml version\="1.0" encoding\="UTF-8"?>\n<environment append\="true" appendContributed\="true">\n<variable delimiter\=";" name\="IAVISA_HOME" operation\="append" value\="/home/ralf/workspace/iavisact-1.x"/>\n</environment>\n
