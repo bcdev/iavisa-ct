@@ -17,17 +17,17 @@ struct THR_CLDDET {
 	/**
 	 * The number channels.
 	 */
-	long channelCount_;
+	int32_t channelCount_;
 	
 	/**
 	 * The number of latitudes.
 	 */
-	long latCount_;
+	int32_t latCount_;
 	
 	/**
 	 * The number of months.
 	 */
-	long monthCount_;
+	int32_t monthCount_;
 	
 	/**
 	 * The latitudes.
@@ -37,12 +37,12 @@ struct THR_CLDDET {
 	/**
 	 * The months.
 	 */
-	long* months_;
+	int32_t* months_;
 
 	/**
 	 * The number of threshold values.
 	 */
-	long thresholdValueCount_;
+	int32_t thresholdValueCount_;
 	
 	/**
 	 * The threshold values.
@@ -55,7 +55,7 @@ struct THR_CLDDET {
 	 * @param zoneId the zone selected.
 	 * @param timeId the time selected.
 	 */
-	THR_CLDDET(long zoneId, long timeId);
+	THR_CLDDET(int32_t zoneId, int32_t timeId);
 	
 	/**
 	 * Destructor.
@@ -65,9 +65,9 @@ struct THR_CLDDET {
 private:
 	class Reader;
 
-	THR_CLDDET(long channelCount, long latCount, long monthCount);
+	THR_CLDDET(int32_t channelCount, int32_t latCount, int32_t monthCount);
 	
-	void init(long channelCount, long latCount, long monthCount);
+	void init(int32_t channelCount, int32_t latCount, int32_t monthCount);
 	
 	static const THR_CLDDET STORE;
 };

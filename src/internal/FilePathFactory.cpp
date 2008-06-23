@@ -40,7 +40,7 @@ string FilePathFactory::createLogFilePath() const {
 }
 
 string FilePathFactory::toString(DatasetId datasetId, TestId testId,
-		long zoneId, long timeId) {
+		int32_t zoneId, int32_t timeId) {
 	string s;
 
 	s.append(toString(datasetId));
@@ -85,7 +85,7 @@ string FilePathFactory::toString(DatasetId datasetId) {
 	}
 }
 
-string FilePathFactory::toString(long id, long width) {
+string FilePathFactory::toString(int32_t id, int32_t width) {
 	ostringstream oss;
 	oss.width(width);
 

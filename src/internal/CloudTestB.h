@@ -1,6 +1,8 @@
 #ifndef CLOUD_TEST_B_H_
 #define CLOUD_TEST_B_H_
 
+#include <stdint.h>
+
 #include "CloudTest.h"
 #include "COF_IASINT.h"
 
@@ -13,7 +15,7 @@ public:
 	 * @param zoneId the zone selected.
 	 * @param timeId the time selected.
 	 */
-	CloudTestB(long zoneId, long timeId) :
+	CloudTestB(int32_t zoneId, int32_t timeId) :
 		CloudTest(TEST_B), zoneId(zoneId), timeId(timeId), cofIasint(zoneId,
 				timeId) {
 	}
@@ -24,8 +26,8 @@ public:
 	bool select(const Sample& sample) const;
 
 private:
-	const long zoneId;
-	const long timeId;
+	const int32_t zoneId;
+	const int32_t timeId;
 	const COF_IASINT cofIasint;
 };
 

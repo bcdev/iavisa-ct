@@ -6,12 +6,12 @@
 
 using namespace std;
 
-THR_POLCLD::THR_POLCLD(long zoneId, long timeId) {
+THR_POLCLD::THR_POLCLD(int32_t zoneId, int32_t timeId) {
 	init(1);
 	thresholdValues_[0] = STORE.thresholdValues_[timeId];
 }
 
-THR_POLCLD::THR_POLCLD(long monthCount) {
+THR_POLCLD::THR_POLCLD(int32_t monthCount) {
 	init(monthCount);
 }
 
@@ -20,29 +20,29 @@ THR_POLCLD::~THR_POLCLD() {
 	delete[] months_;
 }
 
-void THR_POLCLD::init(long monthCount) {
+void THR_POLCLD::init(int32_t monthCount) {
 	monthCount_ = monthCount;
 
-	months_ = new long[monthCount];
+	months_ = new int32_t[monthCount];
 	thresholdValues_ = new double[monthCount];
 }
 
 class THR_POLCLD::Reader : public AbstractDataReader<THR_POLCLD> {
 public:
 	THR_POLCLD read(istream& is) {
-		skip<long long>(is, 2);
+		skip<int64_t>(is, 2);
 
-		long monthCount;
-		readLongLongBE(is, &monthCount);
+		int32_t monthCount;
+		readInt64BE(is, &monthCount);
 
 		THR_POLCLD thrPolcld(monthCount);
 
-		readLongLongBE(is, thrPolcld.months_, monthCount);
+		readInt64BE(is, thrPolcld.months_, monthCount);
 
-		long latLonGridPointCount;
-		readLongLongBE(is, &latLonGridPointCount, 1);
+		int32_t latLonGridPointCount;
+		readInt64BE(is, &latLonGridPointCount, 1);
 		skip<double>(is, latLonGridPointCount * 2);
-		skip<long long>(is, latLonGridPointCount);
+		skip<int64_t>(is, latLonGridPointCount);
 
 		readBE(is, thrPolcld.thresholdValues_, monthCount);
 

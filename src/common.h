@@ -1,6 +1,8 @@
 #ifndef COMMON_H_
 #define COMMON_H_
 
+#include <stdint.h>
+
 #include "internal/CloudTestFactory.h"
 #include "internal/SampleCollector.h"
 
@@ -8,7 +10,7 @@ struct CT {
 	/**
 	 * Constructor.
 	 */
-	CT(DatasetId datasetId, TestId testId, long zoneId, long timeId) :
+	CT(DatasetId datasetId, TestId testId, int32_t zoneId, int32_t timeId) :
 		cloudTest(CloudTestFactory::createCloudTest(testId, zoneId, timeId)),
 				samples(SampleCollector(datasetId).collectSamples(*cloudTest)) {
 	}
@@ -26,13 +28,13 @@ struct CT {
 		cloudTest->execute(parameters, samples, estimates);
 	}
 
-	void getCloudTruth(long truth[]) const {
+	void getCloudTruth(int32_t truth[]) const {
 		for (size_t i = 0; i < samples.size(); ++i) {
 			truth[i] = cloudTest->truth(*samples[i]);
 		}
 	}
 
-	long getSampleCount() const {
+	int32_t getSampleCount() const {
 		return samples.size();
 	}
 

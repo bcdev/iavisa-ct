@@ -60,7 +60,7 @@ static bool cloudTestImpl(const double* BT, double landCover,
 
 void CloudTestB::execute(const double parameters[], const SampleList& samples,
 		bool estimates[]) const {
-	const long count = cofIasint.surfaceTypeCount_;
+	const int32_t count = cofIasint.surfaceTypeCount_;
 	copy(parameters, parameters + 3 * count, cofIasint.thresholdValues_);
 
 	copy(parameters + 3 * count, parameters + 10 * count,

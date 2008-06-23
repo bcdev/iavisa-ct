@@ -1,6 +1,8 @@
 #ifndef IAVISA_GT_H_
 #define IAVISA_GT_H_
 
+#include <stdint.h>
+
 #ifndef ENUMS_H_
 #define ENUMS_H_
 
@@ -47,7 +49,7 @@ void gtGetCloudGuess(bool estimates[], const double parameters[]);
  * 
  * @param truths the array being used to store the cloud truth.
  */
-void gtGetCloudTruth(long truths[]);
+void gtGetCloudTruth(int32_t truths[]);
 
 /**
  * Returns the number of samples for the test selected.
@@ -57,7 +59,7 @@ void gtGetCloudTruth(long truths[]);
  * 
  * @return the number of samples for the test selected.
  */
-long gtSampleCount();
+int32_t gtSampleCount();
 
 /**
  * Returns a copy of the parameters set by {@code gtInit()}.
@@ -74,7 +76,7 @@ void gtGetParameters(double parameters[]);
  * @param timeId     the time selected.
  * @param parameters the array used to store the copy of the default parameters.
  */
-void gtGetDefaultParameters(TestId testId, long zoneId, long timeId,
+void gtGetDefaultParameters(TestId testId, int32_t zoneId, int32_t timeId,
 		double parameters[]);
 
 /**
@@ -82,7 +84,7 @@ void gtGetDefaultParameters(TestId testId, long zoneId, long timeId,
  * 
  * @return the number of parameters set by {@code gtInit()}.
  */
-long gtParameterCount();
+int32_t gtParameterCount();
 
 /**
  * Returns the number of cloud test parameters for the cloud test selected.
@@ -91,21 +93,21 @@ long gtParameterCount();
  * 
  * @return the number of cloud test parameters for the cloud test selected.
  */
-long gtParameterCount(TestId testId);
+int32_t gtParameterCount(TestId testId);
 
 /**
  * Returns the number of geographical zones considered by the cloud test selected.
  *
  * @param testId the cloud test selected.
  */
-long gtZoneCount(TestId testId);
+int32_t gtZoneCount(TestId testId);
 
 /**
  * Returns the number of time periods considered by the cloud test selected.
  *
  * @param testId the cloud test selected.
  */
-long gtTimeCount(TestId testId);
+int32_t gtTimeCount(TestId testId);
 
 /**
  * Returns the log file associated with the cloud test.

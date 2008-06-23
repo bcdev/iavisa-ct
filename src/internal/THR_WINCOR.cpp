@@ -9,27 +9,27 @@
 
 using namespace std;
 
-THR_WINCOR::THR_WINCOR(long zoneId, long timeId) {
+THR_WINCOR::THR_WINCOR(int32_t zoneId, int32_t timeId) {
 	init(1, STORE.channelCount_, STORE.spectralLagCount_, 1);
 
-	const long l = zoneId;
-	const long m = timeId;
+	const int32_t l = zoneId;
+	const int32_t m = timeId;
 
-	long k = 0;
-	for (long i = 0; i < 3; ++i) {
-		for (long j = 0; j < STORE.channelCount_; ++j) {
+	int32_t k = 0;
+	for (int32_t i = 0; i < 3; ++i) {
+		for (int32_t j = 0; j < STORE.channelCount_; ++j) {
 			referenceSpectra_[k]
 					= STORE.referenceSpectra_[j + STORE.channelCount_ * (i + 3 * (m + l * STORE.monthCount_))];
 			++k;
 		}
 	}
-	for (long i = 0; i < 3; ++i) {
+	for (int32_t i = 0; i < 3; ++i) {
 		thresholdValues_[i] = STORE.thresholdValues_[i + 3 * (m + l * STORE.monthCount_)];
 	}
 }
 
-THR_WINCOR::THR_WINCOR(long monthCount, long channelCount,
-		long spectralLagCount, long latCount) {
+THR_WINCOR::THR_WINCOR(int32_t monthCount, int32_t channelCount,
+		int32_t spectralLagCount, int32_t latCount) {
 	init(monthCount, channelCount, spectralLagCount, latCount);
 }
 
@@ -40,14 +40,14 @@ THR_WINCOR::~THR_WINCOR() {
 	delete[] thresholdValues_;
 }
 
-void THR_WINCOR::init(long monthCount, long channelCount,
-		long spectralLagCount, long latCount) {
+void THR_WINCOR::init(int32_t monthCount, int32_t channelCount,
+		int32_t spectralLagCount, int32_t latCount) {
 	monthCount_ = monthCount;
 	channelCount_ = channelCount;
 	spectralLagCount_ = spectralLagCount;
 	latCount_ = latCount;
 
-	months_ = new long[monthCount];
+	months_ = new int32_t[monthCount];
 	lats_ = new double[latCount];
 
 	referenceSpectra_ = new double[3 * latCount * channelCount * monthCount];
@@ -57,32 +57,32 @@ void THR_WINCOR::init(long monthCount, long channelCount,
 class THR_WINCOR::Reader : public AbstractDataReader<THR_WINCOR> {
 public:
 	THR_WINCOR read(istream& is) {
-		long monthCount;
-		long channelCount;
-		long spectralLagCount;
-		long latCount;
+		int32_t monthCount;
+		int32_t channelCount;
+		int32_t spectralLagCount;
+		int32_t latCount;
 
-		readLongLongBE(is, &monthCount);
+		readInt64BE(is, &monthCount);
 
-		long* months = new long[monthCount];
-		readLongLongBE(is, months, monthCount);
+		int32_t* months = new int32_t[monthCount];
+		readInt64BE(is, months, monthCount);
 
-		readLongLongBE(is, &channelCount);
+		readInt64BE(is, &channelCount);
 
-		skip<long long>(is, channelCount);
+		skip<int64_t>(is, channelCount);
 
-		readLongLongBE(is, &spectralLagCount);
-		readLongLongBE(is, &latCount);
+		readInt64BE(is, &spectralLagCount);
+		readInt64BE(is, &latCount);
 
 		THR_WINCOR cofWincor(monthCount, channelCount, spectralLagCount,
 				latCount);
 		copy(months, months + monthCount, cofWincor.months_);
 
-		readLongLongBE(is, cofWincor.lats_, latCount);
+		readInt64BE(is, cofWincor.lats_, latCount);
 
-		long surfaceConditionCount;
-		readLongLongBE(is, &surfaceConditionCount);
-		skip<long long>(is, surfaceConditionCount);
+		int32_t surfaceConditionCount;
+		readInt64BE(is, &surfaceConditionCount);
+		skip<int64_t>(is, surfaceConditionCount);
 
 		readBE(is, cofWincor.referenceSpectra_, 3 * latCount * channelCount
 				* monthCount);

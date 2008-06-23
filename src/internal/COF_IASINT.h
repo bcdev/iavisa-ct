@@ -1,6 +1,8 @@
 #ifndef COF_IASINT_H_
 #define COF_IASINT_H_
 
+#include <stdint.h>
+
 /**
  * Structure for coefficients and threshold values required for cloud test B.
  * <p/>
@@ -15,17 +17,17 @@ struct COF_IASINT {
 	/**
 	 * The number of months.
 	 */
-	long monthCount_;
+	int32_t monthCount_;
 	
 	/**
 	 * The months.
 	 */
-	long* months_;
+	int32_t* months_;
 	
 	/**
 	 * The number of latitudes.
 	 */
-	long latCount_;
+	int32_t latCount_;
 	
 	/**
 	 * The latitudes.
@@ -35,7 +37,7 @@ struct COF_IASINT {
 	/**
 	 * The number of surface types.
 	 */
-	long surfaceTypeCount_;
+	int32_t surfaceTypeCount_;
 	
 	/**
 	 * The threshold values.
@@ -66,7 +68,7 @@ struct COF_IASINT {
 	 * @param zoneId the zone selected.
 	 * @param timeId the time selected.
 	 */
-	COF_IASINT(long zoneId, long timeId);
+	COF_IASINT(int32_t zoneId, int32_t timeId);
 
 	/**
 	 * Destructor.
@@ -77,9 +79,9 @@ struct COF_IASINT {
 private:
 	class Reader;
 
-	COF_IASINT(long monthCount, long latCount, long surfaceTypeCount);
+	COF_IASINT(int32_t monthCount, int32_t latCount, int32_t surfaceTypeCount);
 
-	void init(long monthCount, long latCount, long surfaceTypeCount);
+	void init(int32_t monthCount, int32_t latCount, int32_t surfaceTypeCount);
 
 	static const COF_IASINT STORE;
 };

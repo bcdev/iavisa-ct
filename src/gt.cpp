@@ -34,8 +34,8 @@ void gtGetCloudGuess(bool estimates[], const double parameters[]) {
 	}
 }
 
-long gtSampleCount() {
-	long sampleCount = 0;
+int32_t gtSampleCount() {
+	int32_t sampleCount = 0;
 
 	for (size_t i = 0; i < cts_.size(); ++i) {
 		sampleCount += cts_[i]->getSampleCount();
@@ -44,7 +44,7 @@ long gtSampleCount() {
 	return sampleCount;
 }
 
-void gtGetCloudTruth(long truth[]) {
+void gtGetCloudTruth(int32_t truth[]) {
 	for (size_t i = 0, k = 0; i < cts_.size(); ++i) {
 		cts_[i]->getCloudTruth(&truth[k]);
 		k += cts_[i]->getSampleCount();
@@ -55,25 +55,25 @@ void gtGetParameters(double parameters[]) {
 	copy(parameters_.begin(), parameters_.end(), parameters);
 }
 
-void gtGetDefaultParameters(TestId test, long zoneId, long timeId,
+void gtGetDefaultParameters(TestId test, int32_t zoneId, int32_t timeId,
 		double parameters[]) {
 	return AuxiliaryDataProvider::getDefaultParameters(test, zoneId, timeId,
 			parameters);
 }
 
-long gtParameterCount() {
+int32_t gtParameterCount() {
 	return parameters_.size();
 }
 
-long gtParameterCount(TestId test) {
+int32_t gtParameterCount(TestId test) {
 	return AuxiliaryDataProvider::getParameterCount(test);
 }
 
-long gtZoneCount(TestId test) {
+int32_t gtZoneCount(TestId test) {
 	return AuxiliaryDataProvider::getZoneCount(test);
 }
 
-long gtTimeCount(TestId test) {
+int32_t gtTimeCount(TestId test) {
 	return AuxiliaryDataProvider::getTimeCount(test);
 }
 
@@ -85,7 +85,7 @@ const char* gtDirectoryPath() {
 	return directoryPath_.c_str();
 }
 
-static long gtCreateDirectory(const char* path) {
+static int32_t gtCreateDirectory(const char* path) {
 	string command = "mkdir -p ";
 	command.append(path);
 
@@ -100,11 +100,11 @@ void gtInit(DatasetId datasetId, TestId testId, const char* initId,
 		const char* parameterFilePath) throw() {
 	gtExit();
 
-	const long zoneCount = gtZoneCount(testId);
-	const long timeCount = gtTimeCount(testId);
+	const int32_t zoneCount = gtZoneCount(testId);
+	const int32_t timeCount = gtTimeCount(testId);
 
-	for (long zoneId = 0; zoneId < zoneCount; ++zoneId) {
-		for (long timeId = 0; timeId < timeCount; ++timeId) {
+	for (int32_t zoneId = 0; zoneId < zoneCount; ++zoneId) {
+		for (int32_t timeId = 0; timeId < timeCount; ++timeId) {
 			cts_.push_back(new CT(datasetId, testId, zoneId, timeId));
 		}
 	}
@@ -143,7 +143,7 @@ void gtInit(DatasetId datasetId, TestId testId, const char* initId,
 		directoryPath_ = filePathFactory.createDirectoryPath();
 		parameterFilePath_ = filePathFactory.createParameterFilePath();
 
-		const long status = gtCreateDirectory(directoryPath_.c_str());
+		const int32_t status = gtCreateDirectory(directoryPath_.c_str());
 		if (status == -1) {
 			string msg("Directory '");
 			msg.append(directoryPath_);

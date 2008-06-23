@@ -1,6 +1,8 @@
 #ifndef CLOUD_TEST_D_H_
 #define CLOUD_TEST_D_H_
 
+#include <stdint.h>
+
 #include "CloudTest.h"
 #include "THR_HORCO.h"
 
@@ -13,7 +15,7 @@ public:
 	 * @param zoneId the zone selected.
 	 * @param timeId the time selected.
 	 */
-	CloudTestD(long zoneId, long timeId) :
+	CloudTestD(int32_t zoneId, int32_t timeId) :
 		CloudTest(TEST_D), zoneId(zoneId), timeId(timeId), thrHorco(zoneId,
 				timeId) {
 	}
@@ -28,8 +30,8 @@ public:
 	}
 
 private:
-	const long zoneId;
-	const long timeId;
+	const int32_t zoneId;
+	const int32_t timeId;
 	const THR_HORCO thrHorco;
 };
 

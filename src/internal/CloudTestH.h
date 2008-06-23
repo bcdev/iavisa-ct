@@ -1,6 +1,8 @@
 #ifndef CLOUD_TEST_H_H_
 #define CLOUD_TEST_H_H_
 
+#include <stdint.h>
+
 #include "CloudTest.h"
 #include "THR_DESSTR.h"
 
@@ -13,7 +15,7 @@ public:
 	 * @param zoneId the zone selected.
 	 * @param timeId the time selected.
 	 */
-	CloudTestH(long zoneId, long timeId) :
+	CloudTestH(int32_t zoneId, int32_t timeId) :
 		CloudTest(TEST_H), zoneId(zoneId), timeId(timeId), thrDesstr(zoneId,
 				timeId) {
 	}
@@ -28,13 +30,13 @@ public:
 				|| sample.isDustStorm());
 	}
 
-	long truth(const Sample& sample) const {
+	int32_t truth(const Sample& sample) const {
 		return sample.isDustStorm() ? 3 : 0;
 	}
 
 private:
-	const long zoneId;
-	const long timeId;
+	const int32_t zoneId;
+	const int32_t timeId;
 	const THR_DESSTR thrDesstr;
 };
 

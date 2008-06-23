@@ -2,7 +2,7 @@
 
 Build the IAVISA Cloud Test library by changing  in either the
 Release or Debug directory and type 'make'. Move the resulting
-libiavisa-1.0.a static library  to a path appropriate for your
+libiavisa-1.1.a static library  to a path appropriate for your
 development environment.
 
 Create a new IAVISA home directory and  copy the 'auxdata' and 

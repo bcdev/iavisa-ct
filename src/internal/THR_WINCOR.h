@@ -1,6 +1,8 @@
 #ifndef THR_WINCOR_H_
 #define THR_WINCOR_H_
 
+#include <stdint.h>
+
 /**
  * Structure for threshold values required for cloud test F.
  * <p/>
@@ -15,23 +17,23 @@ struct THR_WINCOR {
 	/**
 	 * The number of month.
 	 */
-	long monthCount_;
+	int32_t monthCount_;
 	/**
 	 * The month identifiers.
 	 */
-	long* months_;
+	int32_t* months_;
 	/**
 	 * The number of channels.
 	 */
-	long channelCount_;
+	int32_t channelCount_;
 	/**
 	 * The number of spectral lags.
 	 */
-	long spectralLagCount_;
+	int32_t spectralLagCount_;
 	/**
 	 * The number of latitude zones.
 	 */
-	long latCount_;
+	int32_t latCount_;
 	/**
 	 * The latitude zones.
 	 */
@@ -51,7 +53,7 @@ struct THR_WINCOR {
 	 * @param zoneId the zone selected.
 	 * @param timeId the time selected.
 	 */
-	THR_WINCOR(long zoneId, long timeId);
+	THR_WINCOR(int32_t zoneId, int32_t timeId);
 
 	/**
 	 * Destructor.
@@ -61,11 +63,11 @@ struct THR_WINCOR {
 private:
 	class Reader;
 
-	THR_WINCOR(long monthCount, long channelCount, long spectralLagCount,
-			long latCount);
+	THR_WINCOR(int32_t monthCount, int32_t channelCount, int32_t spectralLagCount,
+			int32_t latCount);
 
-	void init(long monthCount, long channelCount, long spectralLagCount,
-			long latCount);
+	void init(int32_t monthCount, int32_t channelCount, int32_t spectralLagCount,
+			int32_t latCount);
 
 	static const THR_WINCOR STORE;
 };

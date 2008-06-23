@@ -8,21 +8,21 @@
 
 using namespace std;
 
-THR_CLDDET::THR_CLDDET(long zoneId, long timeId) {
+THR_CLDDET::THR_CLDDET(int32_t zoneId, int32_t timeId) {
 	init(STORE.channelCount_, 1, 1);
 
-	const long l = zoneId;
-	const long m = timeId;
+	const int32_t l = zoneId;
+	const int32_t m = timeId;
 
-	for (long i = 0, k = 0; i < channelCount_; ++i) {
-		for (long j = 0; j < 2; ++j) {
+	for (int32_t i = 0, k = 0; i < channelCount_; ++i) {
+		for (int32_t j = 0; j < 2; ++j) {
 			thresholdValues_[k] = STORE.thresholdValues_[j + 2 * (m + STORE.monthCount_ * (l + i * STORE.latCount_))];
 			++k;
 		}
 	}
 }
 
-THR_CLDDET::THR_CLDDET(long channelCount, long latCount, long monthCount) {
+THR_CLDDET::THR_CLDDET(int32_t channelCount, int32_t latCount, int32_t monthCount) {
 	init(channelCount, latCount, monthCount);
 }
 
@@ -32,13 +32,13 @@ THR_CLDDET::~THR_CLDDET() {
 	delete[] lats_;
 }
 
-void THR_CLDDET::init(long channelCount, long latCount, long monthCount) {
+void THR_CLDDET::init(int32_t channelCount, int32_t latCount, int32_t monthCount) {
 	channelCount_ = channelCount;
 	latCount_ = latCount;
 	monthCount_ = monthCount;
 
 	lats_ = new double[latCount];
-	months_ = new long[monthCount];
+	months_ = new int32_t[monthCount];
 
 	thresholdValueCount_ = channelCount * latCount * monthCount * 2;
 	thresholdValues_ = new double[thresholdValueCount_];
@@ -47,19 +47,19 @@ void THR_CLDDET::init(long channelCount, long latCount, long monthCount) {
 class THR_CLDDET::Reader : public AbstractDataReader<THR_CLDDET> {
 protected:
 	THR_CLDDET read(istream& is) {
-		long channelCount;
-		long latCount;
-		long monthCount;
+		int32_t channelCount;
+		int32_t latCount;
+		int32_t monthCount;
 
-		readLongLongBE(is, &channelCount);
-		readLongLongBE(is, &latCount);
-		readLongLongBE(is, &monthCount);
+		readInt64BE(is, &channelCount);
+		readInt64BE(is, &latCount);
+		readInt64BE(is, &monthCount);
 
 		THR_CLDDET thrClddet(channelCount, latCount, monthCount);
 
 		readBE(is, thrClddet.lats_, latCount);
-		readLongLongBE(is, thrClddet.months_, monthCount);
-		skip<long long>(is, channelCount);
+		readInt64BE(is, thrClddet.months_, monthCount);
+		skip<int64_t>(is, channelCount);
 		readBE(is, thrClddet.thresholdValues_, thrClddet.thresholdValueCount_);
 
 		return thrClddet;

@@ -1,6 +1,7 @@
 #ifndef SAMPLE_H_
 #define SAMPLE_H_
 
+#include <stdint.h>
 #include <vector>
 
 #include "Enums.h"
@@ -32,7 +33,7 @@ public:
 	/**
 	 * Returns the IFOV-in-EFOV index.
 	 */
-	long getIfovInEfovIndex() const {
+	int32_t getIfovInEfovIndex() const {
 		return ifovInEfovIndex;
 	}
 
@@ -44,7 +45,7 @@ public:
 	}
 
 	/** 
-	 * Returns the longitude.
+	 * Returns the int32_titude.
 	 */
 	double getLon() const {
 		return lon;
@@ -53,7 +54,7 @@ public:
 	/**
 	 * Returns the month of obervation.
 	 */
-	long getMonth() const {
+	int32_t getMonth() const {
 		return month;
 	}
 
@@ -102,7 +103,7 @@ public:
 	/**
 	 * Returns the cloud type.
 	 */
-	long getCloudType() const {
+	int32_t getCloudType() const {
 		return cloudType;
 	}
 	
@@ -122,18 +123,18 @@ public:
 	}
 
 private:
-	long ifovId;
+	int32_t ifovId;
 	double randomNumber;
-	long ifovInEfovIndex;
+	int32_t ifovInEfovIndex;
 	double lat;
 	double lon;
-	long month;
-	long cloudType;
-	long ifovValid;
-	long efovValid;
-	long elevatedPolarRegion;
-	long desertRegion;
-	long dustStorm;
+	int32_t month;
+	int32_t cloudType;
+	int32_t ifovValid;
+	int32_t efovValid;
+	int32_t elevatedPolarRegion;
+	int32_t desertRegion;
+	int32_t dustStorm;
 	double fractionalLandCover;
 
 	std::vector<std::vector<double> > brightnessTemperatures;

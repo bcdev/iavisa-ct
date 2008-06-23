@@ -41,7 +41,7 @@ public:
 	 * 
 	 * @param sample the sample.
 	 */
-	virtual long truth(const Sample& sample) const {
+	virtual int32_t truth(const Sample& sample) const {
 		return sample.getCloudType();
 	}
 

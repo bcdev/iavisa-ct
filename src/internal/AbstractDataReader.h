@@ -1,6 +1,7 @@
 #ifndef ABSTRACT_DATA_READER_H_
 #define ABSTRACT_DATA_READER_H_
 
+#include <stdint.h>
 #include <algorithm>
 #include <cassert>
 #include <iostream>
@@ -139,7 +140,7 @@ protected:
 	}
 
 	/**
-	 * Reads a single {@code long long} item from a binary (big endian)
+	 * Reads a single {@code int64_t} item from a binary (big endian)
 	 * input stream into memory.
 	 * 
 	 * @param is       the input stream. 
@@ -147,12 +148,12 @@ protected:
 	 * 
 	 * @return the input stream.
 	 */
-	template<class X> std::istream& readLongLongBE(std::istream& is, X* pointer) const {
-		return readLongLongBE(is, pointer, 1);
+	template<class X> std::istream& readInt64BE(std::istream& is, X* pointer) const {
+		return readInt64BE(is, pointer, 1);
 	}
 
 	/**
-	 * Reads a sequence of {@code long long} items from a binary (big endian)
+	 * Reads a sequence of {@code int64_t} items from a binary (big endian)
 	 * input stream into memory.
 	 * 
 	 * @param is       the input stream. 
@@ -161,9 +162,9 @@ protected:
 	 * 
 	 * @return the input stream.
 	 */
-	template<class X> std::istream& readLongLongBE(std::istream& is,
+	template<class X> std::istream& readInt64BE(std::istream& is,
 			X* pointer, size_t n) const {
-		long long* buffer = new long long[n];
+		int64_t* buffer = new int64_t[n];
 
 		readBE(is, buffer, n);
 		std::copy(buffer, buffer + n, pointer);
@@ -173,7 +174,7 @@ protected:
 	}
 
 	/**
-	 * Reads a single {@code long long} item from a binary (little endian)
+	 * Reads a single {@code int64_t} item from a binary (little endian)
 	 * input stream into memory.
 	 * 
 	 * @param is       the input stream. 
@@ -181,12 +182,12 @@ protected:
 	 * 
 	 * @return the input stream.
 	 */
-	template<class X> std::istream& readLongLongLE(std::istream& is, X* pointer) const {
-		return readLongLongLE(is, pointer, 1);
+	template<class X> std::istream& readInt64LE(std::istream& is, X* pointer) const {
+		return readInt64LE(is, pointer, 1);
 	}
 
 	/**
-	 * Reads a sequence of {@code long long} items from a binary (little endian)
+	 * Reads a sequence of {@code int64_t} items from a binary (little endian)
 	 * input stream into memory.
 	 * 
 	 * @param is       the input stream. 
@@ -195,9 +196,9 @@ protected:
 	 * 
 	 * @return the input stream.
 	 */
-	template<class X> std::istream& readLongLongLE(std::istream& is,
+	template<class X> std::istream& readInt64LE(std::istream& is,
 			X* pointer, size_t n) const {
-		long long* buffer = new long long[n];
+		int64_t* buffer = new int64_t[n];
 
 		readLE(is, buffer, n);
 		std::copy(buffer, buffer + n, pointer);
@@ -228,7 +229,7 @@ private:
 	};
 
 	ByteOrder getMemoryByteOrder() {
-		const unsigned long word = 0x04030201L;
+		const u_int32_t word = 0x04030201L;
 		const unsigned char byte =
 				*reinterpret_cast<const unsigned char*>(&word);
 

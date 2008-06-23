@@ -1,6 +1,8 @@
 #ifndef THR_EOFRES_H_
 #define THR_EOFRES_H_
 
+#include <stdint.h>
+
 /**
  * Structure for threshold values required for cloud test E.
  * <p/>
@@ -15,22 +17,22 @@ struct THR_EOFRES {
 	/**
 	 * The number of channels.
 	 */
-	long channelCount_;
+	int32_t channelCount_;
 
 	/**
-	 * The number of longitude/latitude bins.
+	 * The number of int32_titude/latitude bins.
 	 */
-	long latCount_;
+	int32_t latCount_;
 
 	/**
 	 * The number of months.
 	 */
-	long monthCount_;
+	int32_t monthCount_;
 
 	/**
 	 * The number of surface types.
 	 */
-	long surfaceTypeCount_;
+	int32_t surfaceTypeCount_;
 
 	/**
 	 * The latitudes.
@@ -40,12 +42,12 @@ struct THR_EOFRES {
 	/**
 	 * The months.
 	 */
-	long* months_;
+	int32_t* months_;
 
 	/**
 	 * The number of clear-sky EOFs.
 	 */
-	long clearSkyEofCount_;
+	int32_t clearSkyEofCount_;
 
 	/**
 	 * The clear-sky EOFs.
@@ -63,7 +65,7 @@ struct THR_EOFRES {
 	 * @param zoneId the zone selected.
 	 * @param timeId the time selected.
 	 */
-	THR_EOFRES(long zoneId, long timeId);
+	THR_EOFRES(int32_t zoneId, int32_t timeId);
 
 	/**
 	 * Destructor.
@@ -73,11 +75,11 @@ struct THR_EOFRES {
 private:
 	class Reader;
 
-	THR_EOFRES(long channelCount, long latCount, long monthCount,
-			long surfaceTypeCount, long clearSkyEofCount);
+	THR_EOFRES(int32_t channelCount, int32_t latCount, int32_t monthCount,
+			int32_t surfaceTypeCount, int32_t clearSkyEofCount);
 
-	void init(long channelCount, long latCount, long monthCount,
-			long surfaceTypeCount, long clearSkyEofCount);
+	void init(int32_t channelCount, int32_t latCount, int32_t monthCount,
+			int32_t surfaceTypeCount, int32_t clearSkyEofCount);
 
 	static const THR_EOFRES STORE;
 };

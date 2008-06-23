@@ -1,6 +1,8 @@
 #ifndef CLOUD_TEST_E_H_
 #define CLOUD_TEST_E_H_
 
+#include <stdint.h>
+
 #include "CloudTest.h"
 #include "THR_EOFRES.h"
 
@@ -13,7 +15,7 @@ public:
 	 * @param zoneId the zone selected.
 	 * @param timeId the time selected.
 	 */
-	CloudTestE(long zoneId, long timeId) :
+	CloudTestE(int32_t zoneId, int32_t timeId) :
 		CloudTest(TEST_E), zoneId(zoneId), timeId(timeId), thrEofres(zoneId,
 				timeId) {
 	}
@@ -24,8 +26,8 @@ public:
 	bool select(const Sample& sample) const;
 
 private:
-	const long zoneId;
-	const long timeId;
+	const int32_t zoneId;
+	const int32_t timeId;
 	const THR_EOFRES thrEofres;
 };
 

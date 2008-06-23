@@ -1,6 +1,8 @@
 #ifndef AUX_DESSTR_H_
 #define AUX_DESSTR_H_
 
+#include <stdint.h>
+
 /**
  * Structure for channel numbers and threshold values required for the test
  * of desert dust storms.
@@ -14,14 +16,14 @@ struct THR_DESSTR {
 	friend class CloudTestH;
 	
 	/**
-	 * The number of latitude-longitude grid points.
+	 * The number of latitude-int32_titude grid points.
 	 */
-	long latLonGridPointCount_;
+	int32_t latLonGridPointCount_;
 	
 	/**
 	 * The number of months.
 	 */
-	long monthCount_;
+	int32_t monthCount_;
 	
 	/**
 	 * The latitudes.
@@ -29,14 +31,14 @@ struct THR_DESSTR {
 	double* lats_;
 	
 	/**
-	 * The longitudes.
+	 * The int32_titudes.
 	 */
 	double* lons_;
 	
 	/**
 	 * The months.
 	 */
-	long* months_;
+	int32_t* months_;
 	
 	/**
 	 * The threshold values.
@@ -49,7 +51,7 @@ struct THR_DESSTR {
 	 * @param zoneId the zone selected.
 	 * @param timeId the time selected.
 	 */
-	THR_DESSTR(long zoneId, long timeId);
+	THR_DESSTR(int32_t zoneId, int32_t timeId);
 	
 	/**
 	 * Destructor.
@@ -59,9 +61,9 @@ struct THR_DESSTR {
 private:
 	class Reader;
 
-	THR_DESSTR(long latLonGridPointCount, long monthCount, long channelCount);
+	THR_DESSTR(int32_t latLonGridPointCount, int32_t monthCount, int32_t channelCount);
 
-	void init(long latLonGridPointCount, long monthCount);
+	void init(int32_t latLonGridPointCount, int32_t monthCount);
 
 	static const THR_DESSTR STORE;
 };

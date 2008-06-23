@@ -1,6 +1,8 @@
 #ifndef CLOUD_TEST_G_H_
 #define CLOUD_TEST_G_H_
 
+#include <stdint.h>
+
 #include "CloudTest.h"
 #include "THR_POLCLD.h"
 
@@ -13,7 +15,7 @@ public:
 	 * @param zoneId the zone selected - not used.
 	 * @param timeId the time selected.
 	 */
-	CloudTestG(long zoneId, long timeId) :
+	CloudTestG(int32_t zoneId, int32_t timeId) :
 		CloudTest(TEST_G), zoneId(zoneId), timeId(timeId), thrPolcld(zoneId,
 				timeId) {
 	}
@@ -29,8 +31,8 @@ public:
 	}
 
 private:
-	const long zoneId;
-	const long timeId;
+	const int32_t zoneId;
+	const int32_t timeId;
 	const THR_POLCLD thrPolcld;
 };
 

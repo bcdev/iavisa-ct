@@ -29,11 +29,11 @@ void ctGetCloudGuess(bool estimates[], const double parameters[]) {
 	ct_->getCloudGuess(&parameters[0], estimates);
 }
 
-void ctGetCloudTruth(long truth[]) {
+void ctGetCloudTruth(int32_t truth[]) {
 	ct_->getCloudTruth(truth);
 }
 
-long ctSampleCount() {
+int32_t ctSampleCount() {
 	return ct_->getSampleCount();
 }
 
@@ -41,25 +41,25 @@ void ctGetParameters(double parameters[]) {
 	copy(parameters_.begin(), parameters_.end(), parameters);
 }
 
-void ctGetDefaultParameters(TestId testId, long zoneId, long timeId,
+void ctGetDefaultParameters(TestId testId, int32_t zoneId, int32_t timeId,
 		double parameters[]) {
 	return AuxiliaryDataProvider::getDefaultParameters(testId, zoneId, timeId,
 			parameters);
 }
 
-long ctParameterCount() {
+int32_t ctParameterCount() {
 	return parameters_.size();
 }
 
-long ctParameterCount(TestId testId) {
+int32_t ctParameterCount(TestId testId) {
 	return AuxiliaryDataProvider::getParameterCount(testId);
 }
 
-long ctZoneCount(TestId testId) {
+int32_t ctZoneCount(TestId testId) {
 	return AuxiliaryDataProvider::getZoneCount(testId);
 }
 
-long ctTimeCount(TestId testId) {
+int32_t ctTimeCount(TestId testId) {
 	return AuxiliaryDataProvider::getTimeCount(testId);
 }
 
@@ -71,7 +71,7 @@ const char* ctDirectoryPath() {
 	return directoryPath_.c_str();
 }
 
-static long ctCreateDirectory(const char* path) {
+static int32_t ctCreateDirectory(const char* path) {
 	string command = "mkdir -p ";
 	command.append(path);
 	
@@ -82,7 +82,7 @@ static FILE* ctCreateFile(const char* path) {
 	return fopen(path, "w");
 }
 
-void ctInit(DatasetId datasetId, TestId testId, long zoneId, long timeId,
+void ctInit(DatasetId datasetId, TestId testId, int32_t zoneId, int32_t timeId,
 		const char* initId, const char* parameterFilePath) throw() {
 	ctExit();
 	ct_ = new CT(datasetId, testId, zoneId, timeId);
@@ -123,7 +123,7 @@ void ctInit(DatasetId datasetId, TestId testId, long zoneId, long timeId,
 		directoryPath_ = filePathFactory.createDirectoryPath();
 		parameterFilePath_ = filePathFactory.createParameterFilePath();
 
-		const long status = ctCreateDirectory(directoryPath_.c_str());
+		const int32_t status = ctCreateDirectory(directoryPath_.c_str());
 		if (status == -1) {
 			string msg("Directory '");
 			msg.append(directoryPath_);

@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <fstream>
 #include "iterator"
 
@@ -12,12 +13,12 @@ SampleRecordReader::~SampleRecordReader() {
 }
 
 vector<Sample> SampleRecordReader::read(istream& is) {
-	long sampleRecordCount;
+	int32_t sampleRecordCount;
 	readLE(is, &sampleRecordCount);
 
 	vector<Sample> sampleRecords(sampleRecordCount);
 
-	for (long i = 0; i < sampleRecordCount; ++i) {
+	for (int32_t i = 0; i < sampleRecordCount; ++i) {
 		read(is, sampleRecords[i]);
 	}
 
@@ -40,7 +41,7 @@ istream& SampleRecordReader::read(istream& is, Sample& sampleRecord) const {
 	readLE(is, &sampleRecord.fractionalLandCover);
 
 	for (size_t i = 0; i < sampleRecord.brightnessTemperatures.size(); ++i) {
-		long count;
+		int32_t count;
 		readLE(is, &count);
 
 		sampleRecord.brightnessTemperatures[i].resize(count);

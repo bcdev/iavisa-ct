@@ -1,6 +1,8 @@
 #ifndef IAVISA_CT_H_
 #define IAVISA_CT_H_
 
+#include <stdint.h>
+
 #ifndef ENUMS_H_
 #define ENUMS_H_
 
@@ -47,7 +49,7 @@ void ctGetCloudGuess(bool estimates[], const double parameters[]);
  * 
  * @param truths the array being used to store the cloud truth.
  */
-void ctGetCloudTruth(long truths[]);
+void ctGetCloudTruth(int32_t truths[]);
 
 /**
  * Returns the number of samples for the test selected.
@@ -57,7 +59,7 @@ void ctGetCloudTruth(long truths[]);
  * 
  * @return the number of samples for the test selected.
  */
-long ctSampleCount();
+int32_t ctSampleCount();
 
 /**
  * Returns a copy of the parameters set by {@code ctInit()}.
@@ -74,7 +76,7 @@ void ctGetParameters(double parameters[]);
  * @param timeId     the time selected.
  * @param parameters the array used to store the copy of the default parameters.
  */
-void ctGetDefaultParameters(TestId testId, long zoneId, long timeId,
+void ctGetDefaultParameters(TestId testId, int32_t zoneId, int32_t timeId,
 		double parameters[]);
 
 /**
@@ -82,7 +84,7 @@ void ctGetDefaultParameters(TestId testId, long zoneId, long timeId,
  * 
  * @return the number of parameters set by {@code ctInit()}.
  */
-long ctParameterCount();
+int32_t ctParameterCount();
 
 /**
  * Returns the number of cloud test parameters for the cloud test selected.
@@ -91,21 +93,21 @@ long ctParameterCount();
  * 
  * @return the number of cloud test parameters for the cloud test selected.
  */
-long ctParameterCount(TestId testId);
+int32_t ctParameterCount(TestId testId);
 
 /**
  * Returns the number of geographical zones considered by the cloud test selected.
  *
  * @param testId the cloud test selected.
  */
-long ctZoneCount(TestId testId);
+int32_t ctZoneCount(TestId testId);
 
 /**
  * Returns the number of time periods considered by the cloud test selected.
  *
  * @param testId the cloud test selected.
  */
-long ctTimeCount(TestId testId);
+int32_t ctTimeCount(TestId testId);
 
 /**
  * Returns the log file associated with the cloud test.
@@ -132,7 +134,7 @@ const char* ctDirectoryPath();
  * @param parameterFilePath the path of the file with the initial parameters
  *                          for the cloud test selected.
  */
-void ctInit(DatasetId datasetId, TestId testId, long zoneId, long timeId,
+void ctInit(DatasetId datasetId, TestId testId, int32_t zoneId, int32_t timeId,
 		const char* initId, const char* parameterFilePath) throw();
 
 /**

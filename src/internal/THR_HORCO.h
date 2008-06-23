@@ -1,6 +1,8 @@
 #ifndef THR_HORCO_H_
 #define THR_HORCO_H_
 
+#include <stdint.h>
+
 /**
  * Structure for threshold values required for cloud test D.
  * <p/>
@@ -15,7 +17,7 @@ struct THR_HORCO {
 	/**
 	 * The number of latitudes.
 	 */
-	long latCount_;
+	int32_t latCount_;
 	/**
 	 * The latitudes.
 	 */
@@ -23,15 +25,15 @@ struct THR_HORCO {
 	/**
 	 * The number of months.
 	 */
-	long monthCount_;
+	int32_t monthCount_;
 	/**
 	 * The months.
 	 */
-	long* months_;
+	int32_t* months_;
 	/**
 	 * The number of threshold values.
 	 */
-	long thresholdValueCount_;
+	int32_t thresholdValueCount_;
 	/**
 	 * The threshold values.
 	 */
@@ -43,7 +45,7 @@ struct THR_HORCO {
 	 * @param zoneId the zone selected.
 	 * @param timeId the time selected.
 	 */
-	THR_HORCO(long zoneId, long timeId);
+	THR_HORCO(int32_t zoneId, int32_t timeId);
 	
 	/**
 	 * Destructor.
@@ -53,9 +55,9 @@ struct THR_HORCO {
 private:
 	class Reader;
 
-	THR_HORCO(long latCount, long monthCount, long thresholdValueCount);
+	THR_HORCO(int32_t latCount, int32_t monthCount, int32_t thresholdValueCount);
 	
-	void init(long latCount, long monthCount, long thresholdValueCount);
+	void init(int32_t latCount, int32_t monthCount, int32_t thresholdValueCount);
 	
 	static const THR_HORCO STORE;	
 };

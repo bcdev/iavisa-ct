@@ -1,14 +1,15 @@
 #ifndef FILE_PATH_FACTORY_H_
 #define FILE_PATH_FACTORY_H_
 
+#include <stdint.h>
 #include <string>
 
 #include "Enums.h"
 
 class FilePathFactory {
 public:
-	FilePathFactory(DatasetId datasetId, TestId testId, long zoneId,
-			long timeId, const char* initId) :
+	FilePathFactory(DatasetId datasetId, TestId testId, int32_t zoneId,
+			int32_t timeId, const char* initId) :
 		baseId(toString(datasetId, testId, zoneId, timeId)), initId(initId) {
 	}
 
@@ -32,10 +33,10 @@ public:
 
 private:
 	static std::string toString(DatasetId datasetId, TestId testId,
-			long zoneId, long timeId);
+			int32_t zoneId, int32_t timeId);
 	static std::string toString(DatasetId datasetId);
 	static std::string toString(TestId testId);
-	static std::string toString(long id, long width);
+	static std::string toString(int32_t id, int32_t width);
 
 	const std::string baseId;
 	const std::string initId;

@@ -11,7 +11,7 @@
 
 class CloudTestFactory {
 public:
-	static CloudTest* createCloudTest(TestId testId, long zoneId, long timeId) {
+	static CloudTest* createCloudTest(TestId testId, int32_t zoneId, int32_t timeId) {
 		switch (testId) {
 		case TEST_A:
 			return new CloudTestA(zoneId, timeId);

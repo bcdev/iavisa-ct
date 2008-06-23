@@ -9,7 +9,7 @@
 
 using namespace std;
 
-THR_EOFRES::THR_EOFRES(long zoneId, long timeId) {
+THR_EOFRES::THR_EOFRES(int32_t zoneId, int32_t timeId) {
 	init(STORE.channelCount_, 1, 1, STORE.surfaceTypeCount_,
 			STORE.clearSkyEofCount_);
 
@@ -18,17 +18,17 @@ THR_EOFRES::THR_EOFRES(long zoneId, long timeId) {
 	copy(STORE.clearSkyEofs_, STORE.clearSkyEofs_ + clearSkyEofCount_
 			* channelCount_, clearSkyEofs_);
 
-	const long l = zoneId;
-	const long m = timeId;
+	const int32_t l = zoneId;
+	const int32_t m = timeId;
 
-	const long offset = STORE.surfaceTypeCount_ * (m + l * STORE.monthCount_);
-	for (long i = 0; i < STORE.surfaceTypeCount_; ++i) {
+	const int32_t offset = STORE.surfaceTypeCount_ * (m + l * STORE.monthCount_);
+	for (int32_t i = 0; i < STORE.surfaceTypeCount_; ++i) {
 		thresholdValues_[i] = STORE.thresholdValues_[offset + i];
 	}
 }
 
-THR_EOFRES::THR_EOFRES(long channelCount, long latCount, long monthCount,
-		long surfaceTypeCount, long clearSkyEofCount) {
+THR_EOFRES::THR_EOFRES(int32_t channelCount, int32_t latCount, int32_t monthCount,
+		int32_t surfaceTypeCount, int32_t clearSkyEofCount) {
 	init(channelCount, latCount, monthCount, surfaceTypeCount, clearSkyEofCount);
 }
 
@@ -39,8 +39,8 @@ THR_EOFRES::~THR_EOFRES() {
 	delete[] lats_;
 }
 
-void THR_EOFRES::init(long channelCount, long latCount, long monthCount,
-		long surfaceTypeCount, long clearSkyEofCount) {
+void THR_EOFRES::init(int32_t channelCount, int32_t latCount, int32_t monthCount,
+		int32_t surfaceTypeCount, int32_t clearSkyEofCount) {
 	channelCount_ = channelCount;
 	latCount_ = latCount;
 	monthCount_ = monthCount;
@@ -48,7 +48,7 @@ void THR_EOFRES::init(long channelCount, long latCount, long monthCount,
 	clearSkyEofCount_ = clearSkyEofCount;
 
 	lats_ = new double[latCount];
-	months_ = new long[monthCount];
+	months_ = new int32_t[monthCount];
 	clearSkyEofs_ = new double[clearSkyEofCount * channelCount];
 	thresholdValues_ = new double[surfaceTypeCount * latCount * monthCount];
 }
@@ -56,28 +56,28 @@ void THR_EOFRES::init(long channelCount, long latCount, long monthCount,
 class THR_EOFRES::Reader : public AbstractDataReader<THR_EOFRES> {
 public:
 	THR_EOFRES read(istream& is) {
-		long channelCount;
-		long latCount;
-		long monthCount;
-		long surfaceTypeCount;
+		int32_t channelCount;
+		int32_t latCount;
+		int32_t monthCount;
+		int32_t surfaceTypeCount;
 
-		readLongLongBE(is, &channelCount);
-		readLongLongBE(is, &latCount);
-		readLongLongBE(is, &monthCount);
-		readLongLongBE(is, &surfaceTypeCount);
+		readInt64BE(is, &channelCount);
+		readInt64BE(is, &latCount);
+		readInt64BE(is, &monthCount);
+		readInt64BE(is, &surfaceTypeCount);
 
-		skip<long long>(is, channelCount);
+		skip<int64_t>(is, channelCount);
 
 		double* latLonPairs = new double[latCount * 2];
 		readBE(is, latLonPairs, latCount * 2);
 
-		long* months = new long[monthCount];
-		readLongLongBE(is, months, monthCount);
+		int32_t* months = new int32_t[monthCount];
+		readInt64BE(is, months, monthCount);
 
-		skip<long long>(is, surfaceTypeCount);
+		skip<int64_t>(is, surfaceTypeCount);
 
-		long clearSkyEofCount;
-		readLongLongBE(is, &clearSkyEofCount);
+		int32_t clearSkyEofCount;
+		readInt64BE(is, &clearSkyEofCount);
 
 		THR_EOFRES thrEofres(channelCount, latCount, monthCount,
 				surfaceTypeCount, clearSkyEofCount);

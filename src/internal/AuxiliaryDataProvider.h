@@ -1,6 +1,8 @@
 #ifndef AUXILIARY_DATA_PROVIDER_H_
 #define AUXILIARY_DATA_PROVIDER_H_
 
+#include <stdint.h>
+
 #include "Enums.h"
 #include "THR_CLDDET.h"
 #include "COF_IASINT.h"
@@ -76,45 +78,45 @@ public:
 		}
 	}
 
-	static void getDefaultParameters(TestId testId, long zoneId, long timeId,
+	static void getDefaultParameters(TestId testId, int32_t zoneId, int32_t timeId,
 			double parameters[]) {
-		const long l = zoneId;
-		const long m = timeId;
+		const int32_t l = zoneId;
+		const int32_t m = timeId;
 
 		switch (testId) {
 		case TEST_A:
-			for (long i = 0, k = 0; i < THR_CLDDET::STORE.channelCount_; ++i) {
-				for (long j = 0; j < 2; ++j) {
+			for (int32_t i = 0, k = 0; i < THR_CLDDET::STORE.channelCount_; ++i) {
+				for (int32_t j = 0; j < 2; ++j) {
 					parameters[k] = THR_CLDDET::STORE.thresholdValues_[j + 2 * (m + THR_CLDDET::STORE.monthCount_ * (l + i * THR_CLDDET::STORE.latCount_))];
 					++k;
 				}
 			}
 			return;
 		case TEST_B: {
-			long k = 0;
-			for (long i = 0; i < 3; ++i) {
-				for (long j = 0; j < COF_IASINT::STORE.surfaceTypeCount_; ++j) {
+			int32_t k = 0;
+			for (int32_t i = 0; i < 3; ++i) {
+				for (int32_t j = 0; j < COF_IASINT::STORE.surfaceTypeCount_; ++j) {
 					parameters[k]
 							= COF_IASINT::STORE.thresholdValues_[l + COF_IASINT::STORE.latCount_ * (m + COF_IASINT::STORE.monthCount_ * (j + i * COF_IASINT::STORE.surfaceTypeCount_))];
 					++k;
 				}
 			}
-			for (long i = 0; i < 7; ++i) {
-				for (long j = 0; j < COF_IASINT::STORE.surfaceTypeCount_; ++j) {
+			for (int32_t i = 0; i < 7; ++i) {
+				for (int32_t j = 0; j < COF_IASINT::STORE.surfaceTypeCount_; ++j) {
 					parameters[k]
 							= COF_IASINT::STORE.coefficientsA1_[l + COF_IASINT::STORE.latCount_ * (m + COF_IASINT::STORE.monthCount_ * (j + i * COF_IASINT::STORE.surfaceTypeCount_))];
 					++k;
 				}
 			}
-			for (long i = 0; i < 7; ++i) {
-				for (long j = 0; j < COF_IASINT::STORE.surfaceTypeCount_; ++j) {
+			for (int32_t i = 0; i < 7; ++i) {
+				for (int32_t j = 0; j < COF_IASINT::STORE.surfaceTypeCount_; ++j) {
 					parameters[k]
 							= COF_IASINT::STORE.coefficientsA2_[l + COF_IASINT::STORE.latCount_ * (m + COF_IASINT::STORE.monthCount_ * (j + i * COF_IASINT::STORE.surfaceTypeCount_))];
 					++k;
 				}
 			}
-			for (long i = 0; i < 2; ++i) {
-				for (long j = 0; j < COF_IASINT::STORE.surfaceTypeCount_; ++j) {
+			for (int32_t i = 0; i < 2; ++i) {
+				for (int32_t j = 0; j < COF_IASINT::STORE.surfaceTypeCount_; ++j) {
 					parameters[k]
 							= COF_IASINT::STORE.coefficientsA3_[l + COF_IASINT::STORE.latCount_ * (m + COF_IASINT::STORE.monthCount_ * (j + i * COF_IASINT::STORE.surfaceTypeCount_))];
 					++k;
@@ -123,19 +125,19 @@ public:
 			return;
 		}
 		case TEST_D:
-			for (long k = 0; k < 3; ++k) {
+			for (int32_t k = 0; k < 3; ++k) {
 				parameters[k]
 						= THR_HORCO::STORE.thresholdValues_[l + THR_HORCO::STORE.latCount_ * (m + k * THR_HORCO::STORE.monthCount_)];
 			}
 			return;
 		case TEST_E:
-			for (long k = 0; k < THR_EOFRES::STORE.surfaceTypeCount_; ++k) {
+			for (int32_t k = 0; k < THR_EOFRES::STORE.surfaceTypeCount_; ++k) {
 				parameters[k]
 						= THR_EOFRES::STORE.thresholdValues_[k + THR_EOFRES::STORE.surfaceTypeCount_ * (m + l * THR_EOFRES::STORE.monthCount_)];
 			}
 			return;
 		case TEST_F:
-			for (long k = 0; k < 3; ++k) {
+			for (int32_t k = 0; k < 3; ++k) {
 				parameters[k] = THR_WINCOR::STORE.thresholdValues_[k + 3 * (m + l * THR_WINCOR::STORE.monthCount_)];
 			}
 			return;
@@ -143,7 +145,7 @@ public:
 			parameters[0] = THR_POLCLD::STORE.thresholdValues_[m];
 			return;
 		case TEST_H:
-			for (long i = 0, k = 0; i < 2; ++i) {
+			for (int32_t i = 0, k = 0; i < 2; ++i) {
 				parameters[k] = THR_DESSTR::STORE.thresholdValues_[i + 2 * (m + THR_DESSTR::STORE.monthCount_ * l)];
 				++k;
 			}

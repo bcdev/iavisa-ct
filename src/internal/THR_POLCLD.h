@@ -1,6 +1,8 @@
 #ifndef AUX_POLCLD_H_
 #define AUX_POLCLD_H_
 
+#include <stdint.h>
+
 /**
  * Structure for channel numbers and threshold values required for the cloud test
  * over elevated polar regions.
@@ -16,12 +18,12 @@ struct THR_POLCLD {
 	/**
 	 * The number of months.
 	 */
-	long monthCount_;
+	int32_t monthCount_;
 
 	/**
 	 * The months.
 	 */
-	long* months_;
+	int32_t* months_;
 		
 	/**
 	 * The threshold values.
@@ -34,7 +36,7 @@ struct THR_POLCLD {
 	 * @param zoneId the zone selected - not used.
 	 * @param timeId the time selected.
 	 */
-	THR_POLCLD(long zoneId, long timeId);
+	THR_POLCLD(int32_t zoneId, int32_t timeId);
 	
 	/**
 	 * Destructor.
@@ -44,9 +46,9 @@ struct THR_POLCLD {
 private:
 	class Reader;
 
-	THR_POLCLD(long monthCount);
+	THR_POLCLD(int32_t monthCount);
 
-	void init(long monthCount);
+	void init(int32_t monthCount);
 
 	static const THR_POLCLD STORE;
 };
