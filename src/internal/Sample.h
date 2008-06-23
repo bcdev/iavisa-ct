@@ -97,7 +97,7 @@ public:
 	 * Tests whether the sample is classified as cloudy.
 	 */
 	bool isCloudy() const {
-		return cloudType != 0;
+		return cloudType != 1;
 	}
 	
 	/**

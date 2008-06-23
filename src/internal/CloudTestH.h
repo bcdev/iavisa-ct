@@ -31,7 +31,7 @@ public:
 	}
 
 	int32_t truth(const Sample& sample) const {
-		return sample.isDustStorm() ? 3 : 0;
+		return sample.isDustStorm() ? 4 : 1;
 	}
 
 private:

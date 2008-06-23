@@ -9,7 +9,10 @@
 #include "internal/AuxiliaryDataProvider.h"
 #include "internal/FilePathFactory.h"
 
+extern "C" {
 #include "ct.h"
+}
+
 #include "common.h"
 
 using namespace std;
@@ -22,10 +25,10 @@ static string parameterFilePath_;
 static FILE* logFile_;
 
 void ctGetCloudGuess(bool estimates[]) {
-	ctGetCloudGuess(estimates, &parameters_[0]);
+	ctGetCloudGuessForParameters(&parameters_[0], estimates);
 }
 
-void ctGetCloudGuess(bool estimates[], const double parameters[]) {
+void ctGetCloudGuessForParameters(const double parameters[], bool estimates[]) {
 	ct_->getCloudGuess(&parameters[0], estimates);
 }
 
@@ -41,8 +44,8 @@ void ctGetParameters(double parameters[]) {
 	copy(parameters_.begin(), parameters_.end(), parameters);
 }
 
-void ctGetDefaultParameters(TestId testId, int32_t zoneId, int32_t timeId,
-		double parameters[]) {
+void ctGetDefaultParametersForTest(enum TestId testId, int32_t zoneId,
+		int32_t timeId, double parameters[]) {
 	return AuxiliaryDataProvider::getDefaultParameters(testId, zoneId, timeId,
 			parameters);
 }
@@ -51,15 +54,15 @@ int32_t ctParameterCount() {
 	return parameters_.size();
 }
 
-int32_t ctParameterCount(TestId testId) {
+int32_t ctParameterCountForTest(enum TestId testId) {
 	return AuxiliaryDataProvider::getParameterCount(testId);
 }
 
-int32_t ctZoneCount(TestId testId) {
+int32_t ctZoneCountForTest(enum TestId testId) {
 	return AuxiliaryDataProvider::getZoneCount(testId);
 }
 
-int32_t ctTimeCount(TestId testId) {
+int32_t ctTimeCountForTest(enum TestId testId) {
 	return AuxiliaryDataProvider::getTimeCount(testId);
 }
 
@@ -74,7 +77,7 @@ const char* ctDirectoryPath() {
 static int32_t ctCreateDirectory(const char* path) {
 	string command = "mkdir -p ";
 	command.append(path);
-	
+
 	return system(command.c_str());
 }
 
@@ -82,12 +85,12 @@ static FILE* ctCreateFile(const char* path) {
 	return fopen(path, "w");
 }
 
-void ctInit(DatasetId datasetId, TestId testId, int32_t zoneId, int32_t timeId,
-		const char* initId, const char* parameterFilePath) throw() {
+void ctInit(enum DatasetId datasetId, enum TestId testId, int32_t zoneId,
+		int32_t timeId, const char* initId, const char* parameterFilePath) {
 	ctExit();
 	ct_ = new CT(datasetId, testId, zoneId, timeId);
 
-	parameters_.resize(ctParameterCount(testId), 0.0);
+	parameters_.resize(ctParameterCountForTest(testId), 0.0);
 
 	if (parameterFilePath != 0) {
 		ifstream ifs(parameterFilePath);
@@ -114,7 +117,7 @@ void ctInit(DatasetId datasetId, TestId testId, int32_t zoneId, int32_t timeId,
 			throw ios_base::failure(msg);
 		}
 	} else {
-		ctGetDefaultParameters(testId, zoneId, timeId, &parameters_[0]);
+		ctGetDefaultParametersForTest(testId, zoneId, timeId, &parameters_[0]);
 	}
 
 	if (initId != 0) {

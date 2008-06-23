@@ -11,7 +11,10 @@
 #include "internal/FilePathFactory.h"
 #include "internal/SampleCollector.h"
 
-#include "gt.h"
+extern "C" {
+	#include "gt.h"
+}
+
 #include "common.h"
 
 using namespace std;
@@ -24,10 +27,10 @@ static string parameterFilePath_;
 static FILE* logFile_;
 
 void gtGetCloudGuess(bool estimates[]) {
-	gtGetCloudGuess(estimates, &parameters_[0]);
+	gtGetCloudGuessForParameters(&parameters_[0], estimates);
 }
 
-void gtGetCloudGuess(bool estimates[], const double parameters[]) {
+void gtGetCloudGuessForParameters(const double parameters[], bool estimates[]) {
 	for (size_t i = 0, k = 0; i < cts_.size(); ++i) {
 		cts_[i]->getCloudGuess(&parameters[0], &estimates[k]);
 		k += cts_[i]->getSampleCount();
@@ -55,7 +58,7 @@ void gtGetParameters(double parameters[]) {
 	copy(parameters_.begin(), parameters_.end(), parameters);
 }
 
-void gtGetDefaultParameters(TestId test, int32_t zoneId, int32_t timeId,
+void gtGetDefaultParametersForTest(enum TestId test, int32_t zoneId, int32_t timeId,
 		double parameters[]) {
 	return AuxiliaryDataProvider::getDefaultParameters(test, zoneId, timeId,
 			parameters);
@@ -65,15 +68,15 @@ int32_t gtParameterCount() {
 	return parameters_.size();
 }
 
-int32_t gtParameterCount(TestId test) {
+int32_t gtParameterCountForTest(enum TestId test) {
 	return AuxiliaryDataProvider::getParameterCount(test);
 }
 
-int32_t gtZoneCount(TestId test) {
+int32_t gtZoneCountForTest(enum TestId test) {
 	return AuxiliaryDataProvider::getZoneCount(test);
 }
 
-int32_t gtTimeCount(TestId test) {
+int32_t gtTimeCountForTest(enum TestId test) {
 	return AuxiliaryDataProvider::getTimeCount(test);
 }
 
@@ -96,12 +99,12 @@ static FILE* gtCreateFile(const char* path) {
 	return fopen(path, "w");
 }
 
-void gtInit(DatasetId datasetId, TestId testId, const char* initId,
-		const char* parameterFilePath) throw() {
+void gtInit(enum DatasetId datasetId, enum TestId testId, const char* initId,
+		const char* parameterFilePath) {
 	gtExit();
 
-	const int32_t zoneCount = gtZoneCount(testId);
-	const int32_t timeCount = gtTimeCount(testId);
+	const int32_t zoneCount = gtZoneCountForTest(testId);
+	const int32_t timeCount = gtTimeCountForTest(testId);
 
 	for (int32_t zoneId = 0; zoneId < zoneCount; ++zoneId) {
 		for (int32_t timeId = 0; timeId < timeCount; ++timeId) {
@@ -109,7 +112,7 @@ void gtInit(DatasetId datasetId, TestId testId, const char* initId,
 		}
 	}
 
-	parameters_.resize(gtParameterCount(testId), 0.0);
+	parameters_.resize(gtParameterCountForTest(testId), 0.0);
 
 	if (parameterFilePath != 0) {
 		ifstream ifs(parameterFilePath);

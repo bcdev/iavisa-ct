@@ -1,6 +1,7 @@
 #ifndef IAVISA_GT_H_
 #define IAVISA_GT_H_
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #ifndef ENUMS_H_
@@ -39,10 +40,10 @@ void gtGetCloudGuess(bool estimates[]);
 /**
  * Returns the cloud test estimates for the given test parameters.
  * 
- * @param estimates  the array being used to store the cloud test estimates.
  * @param parameters the cloud test parameters.
+ * @param estimates  the array being used to store the cloud test estimates.
  */
-void gtGetCloudGuess(bool estimates[], const double parameters[]);
+void gtGetCloudGuessForParameters(const double parameters[], bool estimates[]);
 
 /**
  * Returns the cloud truth.
@@ -76,7 +77,7 @@ void gtGetParameters(double parameters[]);
  * @param timeId     the time selected.
  * @param parameters the array used to store the copy of the default parameters.
  */
-void gtGetDefaultParameters(TestId testId, int32_t zoneId, int32_t timeId,
+void gtGetDefaultParametersForTest(enum TestId testId, int32_t zoneId, int32_t timeId,
 		double parameters[]);
 
 /**
@@ -93,21 +94,21 @@ int32_t gtParameterCount();
  * 
  * @return the number of cloud test parameters for the cloud test selected.
  */
-int32_t gtParameterCount(TestId testId);
+int32_t gtParameterCountForTest(enum TestId testId);
 
 /**
  * Returns the number of geographical zones considered by the cloud test selected.
  *
  * @param testId the cloud test selected.
  */
-int32_t gtZoneCount(TestId testId);
+int32_t gtZoneCountForTest(enum TestId testId);
 
 /**
  * Returns the number of time periods considered by the cloud test selected.
  *
  * @param testId the cloud test selected.
  */
-int32_t gtTimeCount(TestId testId);
+int32_t gtTimeCountForTest(enum TestId testId);
 
 /**
  * Returns the log file associated with the cloud test.
@@ -132,8 +133,8 @@ const char* gtDirectoryPath();
  * @param parameterFilePath the path of the file with the initial parameters
  *                          for the cloud test selected.
  */
-void gtInit(DatasetId datasetId, TestId testId, const char* initId,
-		const char* parameterFilePath) throw();
+void gtInit(enum DatasetId datasetId, enum TestId testId, const char* initId,
+		const char* parameterFilePath);
 
 /**
  * Exits the cloud test.
