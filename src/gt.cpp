@@ -155,7 +155,7 @@ void gtInit(enum DatasetId datasetId, enum TestId testId, const char* initId,
 			gtExit();
 			throw runtime_error(msg);
 		}
-		gtCreateFile(filePathFactory.createLogFilePath().c_str());
+		logFile_ = gtCreateFile(filePathFactory.createLogFilePath().c_str());
 	}
 }
 

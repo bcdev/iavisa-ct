@@ -135,7 +135,7 @@ void ctInit(enum DatasetId datasetId, enum TestId testId, int32_t zoneId,
 			ctExit();
 			throw runtime_error(msg);
 		}
-		ctCreateFile(filePathFactory.createLogFilePath().c_str());
+		logFile_ = ctCreateFile(filePathFactory.createLogFilePath().c_str());
 	}
 }
 
