@@ -29,7 +29,7 @@ public:
 	double getRandomNumber() const {
 		return randomNumber;
 	}
-
+	
 	/**
 	 * Returns the IFOV-in-EFOV index.
 	 */
@@ -120,6 +120,14 @@ public:
 	 */
 	const double* getBrightnessTemperatures(TestId testId) const {
 		return &brightnessTemperatures[testId][0];
+	}
+
+	/**
+	 * Returns the brightness temperatures for the IFOV associated
+	 * with this sample.
+	 */
+	const std::vector<double> getBrightnessTemperatureVector(TestId testId) const {
+		return brightnessTemperatures[testId];
 	}
 
 private:

@@ -6,7 +6,7 @@ libiavisa-1.2.a static library  to a path appropriate for your
 development environment.
 
 Create a new IAVISA home directory and  copy the 'auxdata' and 
-'database' folders into the newly created directory.
+'optdata' folders into the newly created directory.
 
 Set the environment variable 'IAVISA_HOME' to your IAVISA home
 directory.

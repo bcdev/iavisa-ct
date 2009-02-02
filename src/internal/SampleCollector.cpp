@@ -50,4 +50,4 @@ static const string getenv(const string& name, const string& defaultValue) {
 
 const vector<Sample>
 		SampleCollector::SAMPLES =
-				SampleRecordReader().AbstractDataReader<std::vector<Sample> >::read(FilePathResolver::getAbsolutePath(getenv("IAVISA_DATA", "database/IAVISA_SAMPLES_CLDTST_OPT")).c_str());
+				SampleRecordReader().AbstractDataReader<std::vector<Sample> >::read(FilePathResolver::getAbsolutePath(getenv("IAVISA_DATA", "optdata/IAVISA_SAMPLES_CLDTST_OPT")).c_str());

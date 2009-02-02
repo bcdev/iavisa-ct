@@ -23,6 +23,10 @@ public:
 
 	SampleList collectSamples(const CloudTest& cloudTest) const;
 
+	static std::vector<Sample> getSamples() {
+		return SAMPLES;
+	}
+	
 private:
 	SampleList dataset;
 
