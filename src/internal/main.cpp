@@ -38,9 +38,9 @@ int main(int argc, char* argv[]) {
 //		writeVector(cout, sample.getBrightnessTemperatureVector(TEST_F)); // 400 values
 		writeVector(cout, sample.getBrightnessTemperatureVector(TEST_G));
 		writeVector(cout, sample.getBrightnessTemperatureVector(TEST_H));		
+
+		cout << endl;
 	}
-	
-	cout << endl;
-	
+		
 	return 0;
 }
